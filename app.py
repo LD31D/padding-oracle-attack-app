@@ -17,7 +17,7 @@ def get_random_message(length: int = None) -> str:
     if length is None:
         length = random.randint(4, 15)
 
-    alphabet = string.ascii_letters + string.digits + string.punctuation + ' '
+    alphabet = string.ascii_letters + string.digits + string.punctuation
     message = ''.join(random.choice(alphabet) for _ in range(length))
     return message
 
