@@ -8,6 +8,7 @@ from Crypto.Util.Padding import pad, unpad
 
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 BLOCK_SIZE = 16
 KEY = os.urandom(BLOCK_SIZE)  # AES-128 key
