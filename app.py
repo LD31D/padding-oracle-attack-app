@@ -66,6 +66,33 @@ def check_padding():
     })
 
 
+@app.route('/check-insecure-padding', methods=['POST'])
+def check_insecure_padding():
+    data = request.get_json()
+    iv = bytes.fromhex(data['iv'])
+    ciphertext = bytes.fromhex(data['ciphertext'])
+
+    cipher = AES.new(KEY, AES.MODE_CBC, iv)
+    try:
+        decrypted = cipher.decrypt(ciphertext)
+    except ValueError:
+        return jsonify({
+            'ok': False,
+            'error': 'Decryption error'
+        })
+    
+    padding_length = decrypted[-1]
+    if padding_length < 1 or padding_length > BLOCK_SIZE:
+        return jsonify({
+            'ok': False,
+            'error': 'Invalid padding'
+        })
+    
+    return jsonify({
+        'ok': True
+    })
+
+
 @app.route('/check-message', methods=['POST'])
 def check_message():
     data = request.get_json()

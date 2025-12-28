@@ -64,6 +64,9 @@ Gets you a random encrypted message to attack. The server generates some random 
 }
 ```
 
+### POST `/check-insecure-padding`
+Same as `/check-padding`, but uses a custom (insecure) padding check instead of the library function. Good for testing different oracle implementations.
+
 ### POST `/check-message`
 
 Decrypts the ciphertext, removes padding, and compares the result with a provided plaintext.
