@@ -65,6 +65,7 @@ Gets you a random encrypted message to attack. The server generates some random 
 ```
 
 ### POST `/check-insecure-padding`
+
 Same as `/check-padding`, but uses a custom (insecure) padding check instead of the library function. Good for testing different oracle implementations.
 
 ### POST `/check-message`
@@ -128,3 +129,10 @@ docker run -p 5834:5834 padding-oracle
 ```
 
 Server runs on `http://127.0.0.1:5834`
+
+## Typical Attack Flow
+
+1. Call /get-message to obtain (IV, ciphertext)
+2. Repeatedly query /check-padding with modified IVs
+3. Recover plaintext byte-by-byte
+4. Verify result using /check-message
